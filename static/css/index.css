@@ -6,3 +6,28 @@
 }
 
 /* Your styles begin here */
+
+.pokemon-flex {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.pokemon {
+    width: 20%;
+    max-width: 200px;
+    min-width: 120px;
+    height: 200px;
+    margin: 10px;
+    padding: 5px;
+    text-align: center;
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+.pokemon-flex > h1 {
+    margin: 10px 0px 0px 10px;
+    width: 100%;
+}
