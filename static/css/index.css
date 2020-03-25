@@ -16,7 +16,7 @@
 }
 
 .pokemon {
-    width: 20%;
+    width: 22%;
     max-width: 200px;
     min-width: 120px;
     height: 200px;
@@ -30,4 +30,8 @@
 .pokemon-flex > h1 {
     margin: 10px 0px 0px 10px;
     width: 100%;
+}
+
+.pokeimage {
+    max-width:90%;
 }
