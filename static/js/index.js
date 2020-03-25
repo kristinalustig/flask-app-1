@@ -121,6 +121,9 @@ $(document).ready(function() {
 
             //populate the pokemon's name
             $(".modal-pokename").text(currentPokemon.name);
+            
+            //populate the description
+            $(".modal-pokedescription").text(currentPokemon.description);
 
             //turn off scrolling
             $("html, body").css("overflow","hidden");
