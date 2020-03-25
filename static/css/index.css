@@ -7,12 +7,17 @@
 
 /* Your styles begin here */
 
+
+/* Styling for the main index */
+
+
 .pokemon-flex {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     max-width: 850px;
     margin: 0 auto;
+    z-index: 0;
 }
 
 .pokemon {
@@ -34,7 +39,19 @@
     width: 100%;
 }
 
-.modal-pokeimage, .pokeimage {
+.pokeimage {
+    max-width:90%;
+}
+
+
+/*Styling for the modal*/
+
+ul {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.modal-pokeimage {
     max-width:90%;
     position:relative;
 }
@@ -49,24 +66,46 @@
     z-index: 50;
 }
 
+.modal-container {
+    display: none;
+    position: fixed;
+    top:0px;
+    width: 100%;
+    z-index: 100;
+}
+
 .modal {
-    display:none;
     width: 80%;
     max-width: 850px;
-    height: 90%;
-    position: fixed;
-    top: 30px;
+    position: relative;
+    top: 40px;
+    padding: 20px;
+    margin: 0 auto;
     z-index: 100;
     background-color: white;
     border: 1px solid black;
 }
 
+.modal div {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
 th, td {
-    padding: 2px;
+    padding: 10px;
     border: 1px solid lightgray;
 }
 
-..modal-dismiss {
+table {
+    margin-top: 10px;
+}
+
+.modal p {
+    margin-top: 10px;
+}
+
+.modal-dismiss {
     position: absolute;
     width: 100%;
     bottom: 10px;

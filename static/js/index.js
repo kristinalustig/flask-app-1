@@ -101,16 +101,18 @@ $(document).ready(function() {
     function toggleDetails() {
 
         $('.modal-bg').toggle();
-        $('.modal').toggle();
 
         var currentPokemon = pokeHelper($(this).attr("id"));
 
-        //only do all this stuff if we're displaying the modal, not hiding it
+        //only populate all this stuff if we're displaying the modal, not hiding it
 
-        if ($('.modal').css("display") === "none") {
+        if ($('.modal-bg').css("display") === "none") {
+
+            //turn off the modal
+            $('.modal-container').toggle();
 
             //turn on scrolling
-            $("html, body").css("overflow","auto");
+            $("body").css("overflow-y","auto");
 
             //remove elements from type + evolution
             $('.evolution-item').remove();
@@ -119,27 +121,29 @@ $(document).ready(function() {
         }
         else {
 
+            //show the modal itself
+            $('.modal-container').toggle();
+
+            //turn off scrolling
+            $("body").css("overflow-y","hidden");
+
             //populate the pokemon's name
             $(".modal-pokename").text(currentPokemon.name);
             
             //populate the description
             $(".modal-pokedescription").text(currentPokemon.description);
 
-            //turn off scrolling
-            $("html, body").css("overflow","hidden");
-
+            //populates the image URL
             $(".modal-pokeimage").attr("src",currentPokemon.image_url);
 
             //appends correct information to "types" section
             $('.modal-typelist').append(listMaker(currentPokemon.types));    
 
-            //creates the table for evolutions for a given pokemon, or hides the table altogether
+            //creates the table for evolutions for a given pokemon
             if (currentPokemon.evolutions.length != 0) {
                 $('.modal-evolution-table').append(tableRowMaker(currentPokemon.evolutions));
             }
-            else {
-                $('.modal-evolution-table').hide();
-            }
+
             
         }
         
