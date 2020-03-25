@@ -15,10 +15,9 @@ $(document).ready(function() {
 
                 for (var pokenum = 1; pokenum <= 151; pokenum++) {
 
-                    var pokemonName = pokemonData[pokenum-1].name;
                     $(".pokemon-flex").append(
                         `<div class="pokemon" id="${pokemonData[pokenum-1].id}">
-                            <h2 class="pokename">${pokemonName}</h2>
+                            <h2 class="pokename">${pokemonData[pokenum-1].id}</h2>
                             <img class = "pokeimage" src="${data[pokenum-1].image_url}" />
                         </div>`
                     );
@@ -33,6 +32,7 @@ $(document).ready(function() {
 
             }
         });
+
 
         function pokehoverEnter() {
             $(this).css("background-color", "lightblue");
@@ -81,6 +81,24 @@ $(document).ready(function() {
             return typeString;
         }
 
+//takes an array of evolution information and returns rows to be inserted into a table
+        function tableRowMaker(evolutionArray) {
+            var tableString = "";
+
+            for (var x = 0; x < evolutionArray.length; x++) {
+                tableString += 
+                    `<tr>
+                        <td class="evolution-link">${evolutionArray[x].to}</td>
+                        <td>${evolutionArray[x].level}</td>
+                        <td>${evolutionArray[x].method}</td>
+                    </tr>
+                    `;
+            }
+
+            return tableString;
+
+        }
+
 //Creates a large modal for all pokemon details, or minimizes it.
         function toggleDetails() {
 
@@ -91,36 +109,18 @@ $(document).ready(function() {
             $('.modal').toggle();
 
             //appends correct information to "types" section
-            $('modal-typelist').append(listMaker(currentPokemon.types));
+            $('.modal-typelist').append(listMaker(currentPokemon.types));
 
-            //inserts the information into unordered list
+            //inserts correct evolution info into table if not empty. If empty, hides table.
             
 
             //creates the table for evolutions for a given pokemon, or hides the table altogether
             var tableString = "";
             if (currentPokemon.evolutions.length != 0) {
-                tableString = 
-                    `<table>
-                        <tr>
-                            <th>Name</th>
-                            <th>Level</th>
-                            <th>Method</th>
-                        </tr>
-                        `;
-
-                for (var x = 0; x < currentPokemon.evolutions.length; x++) {
-                    tableString += 
-                        `<tr>
-                            <td class="evolution-link">${currentPokemon.evolutions[x].to}</td>
-                            <td>${currentPokemon.evolutions[x].level}</td>
-                            <td>${currentPokemon.evolutions[x].method}</td>
-                        </tr>
-                        `;
-                }
-                tableString += `</table>`;
+                $('.modal-evolution-table').append(tableRowMaker(currentPokemon.evolutions));
             }
             else {
-                tableString = "None.";
+                $('.modal-evolution-table').hide();
             }
 
 
