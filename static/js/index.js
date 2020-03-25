@@ -2,6 +2,7 @@
 $(document).ready(function() {
 
     var pokemonData;
+    var currentPokemon;
 
     $.ajax("api/pokemon",
         {
@@ -24,12 +25,12 @@ $(document).ready(function() {
                     .mouseenter(pokehoverEnter)
                     .mouseleave(pokehoverLeave)
                     .click(toggleDetails);
-                $(".evolution-link")
-                    .click(navigateToEvolution);
+                
 
             }
     });
 
+    
     $(".modal")
         .click(toggleDetails);
 
@@ -50,16 +51,12 @@ $(document).ready(function() {
         event.stopPropagation();
 
         //identify the destination
-        var navigationTarget = $(this).text();
-        console.log("clicked " + navigationTarget);
+        var destinationPokemon = pokeHelper(($(this).attr("id")).slice(1));
 
-        //close the current window
-        console.log("close " + $(this).closest(".pokemon").find(".pokename").text());
-        toggleDetails($(this).closest(".pokemon"));
-        //$(this).closest(".pokemon").toggleDetails;
+        //trigger the appropriate clicks
+        $(document.getElementById(currentPokemon.id)).trigger('click');
+        $(document.getElementById(destinationPokemon.id)).trigger('click');
 
-        //open the new window
-        //$(document.getElementById(navigationTarget)).toggleDetails;
     }
 
 //helper function - given an ID, return that pokemon's data
@@ -86,7 +83,7 @@ $(document).ready(function() {
         for (var x = 0; x < evolutionArray.length; x++) {
             tableString += 
                 `<tr class="evolution-item">
-                    <td class="evolution-link">${evolutionArray[x].to}</td>
+                    <td class="evolution-link" id="e${evolutionArray[x].id}">${evolutionArray[x].to}</td>
                     <td>${evolutionArray[x].level}</td>
                     <td>${evolutionArray[x].method}</td>
                 </tr>
@@ -102,7 +99,7 @@ $(document).ready(function() {
 
         $('.modal-bg').toggle();
 
-        var currentPokemon = pokeHelper($(this).attr("id"));
+        currentPokemon = pokeHelper($(this).attr("id"));
 
         //only populate all this stuff if we're displaying the modal, not hiding it
 
@@ -142,7 +139,9 @@ $(document).ready(function() {
             //creates the table for evolutions for a given pokemon
             if (currentPokemon.evolutions.length != 0) {
                 $('.modal-evolution-table').append(tableRowMaker(currentPokemon.evolutions));
+                $(".evolution-link").click(navigateToEvolution);
             }
+
 
             
         }
