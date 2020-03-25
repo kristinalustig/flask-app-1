@@ -13,59 +13,13 @@ $(document).ready(function() {
 
                 pokemonData = data;
 
-                console.log("success");
                 for (var pokenum = 1; pokenum <= 151; pokenum++) {
 
-                    //creates the string for the types unordered list
-                    var typeString = "";
-                    for (var i = 0; i < data[pokenum-1].types.length; i++) {
-                        typeString += `<li>${data[pokenum-1].types[i]}</li>
-                        `;
-                    }
-
-                    //creates the table for evolutions for a given pokemon, or "none"
-                    var tableString = "";
-                    if (data[pokenum-1].evolutions.length != 0) {
-                        tableString = 
-                            `<table>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Level</th>
-                                    <th>Method</th>
-                                </tr>
-                                `;
-
-                        for (var x = 0; x < data[pokenum-1].evolutions.length; x++) {
-                            tableString += 
-                                `<tr>
-                                    <td class="evolution-link">${data[pokenum-1].evolutions[x].to}</td>
-                                    <td>${data[pokenum-1].evolutions[x].level}</td>
-                                    <td>${data[pokenum-1].evolutions[x].method}</td>
-                                </tr>
-                                `;
-                        }
-                        tableString += `</table>`;
-                    }
-                    else {
-                        tableString = "None.";
-                    }
-
-                    var pokemonName = data[pokenum-1].name;
+                    var pokemonName = pokemonData[pokenum-1].name;
                     $(".pokemon-flex").append(
-                        `<div class="pokemon" id="${pokemonName}">
+                        `<div class="pokemon" id="${pokemonData[pokenum-1].id}">
                             <h2 class="pokename">${pokemonName}</h2>
                             <img class = "pokeimage" src="${data[pokenum-1].image_url}" />
-                            <div class="pokedetails">
-                                <h2>Type(s)</h2>
-                                    <ul>
-                                    ${typeString}
-                                    </ul>
-                                <h2>Description</h2>
-                                <p>${data[pokenum-1].description}</p>
-                                <h2>Evolution(s)</h2>
-                                    ${tableString}
-                                <p class="dismiss-message">Click anywhere to dismiss.</p>
-                            </div>
                         </div>`
                     );
 
@@ -76,7 +30,6 @@ $(document).ready(function() {
                     .click(toggleDetails);
                 $(".evolution-link")
                     .click(navigateToEvolution);
-
 
             }
         });
@@ -112,12 +65,63 @@ $(document).ready(function() {
 //helper function - given an ID, return that pokemon's data
         function pokeHelper(id) {
 
+            console.log(pokemonData[id-1]);
+
             return pokemonData[id-1];
-            
+
+        }
+
+//takes an array of types and outputs a string of formatted list items to append
+        function listMaker(typeArray) {
+            var typeString = "";
+            for (var i = 0; i < typeArray.length; i++) {
+                typeString += `<li>${typeArray[i]}</li>
+                `;
+            }
+            return typeString;
         }
 
 //Creates a large modal for all pokemon details, or minimizes it.
         function toggleDetails() {
+
+            console.log($(this).attr("id"));
+            var currentPokemon = pokeHelper($(this).attr("id"));
+
+            $('.modal-bg').toggle();
+            $('.modal').toggle();
+
+            //appends correct information to "types" section
+            $('modal-typelist').append(listMaker(currentPokemon.types));
+
+            //inserts the information into unordered list
+            
+
+            //creates the table for evolutions for a given pokemon, or hides the table altogether
+            var tableString = "";
+            if (currentPokemon.evolutions.length != 0) {
+                tableString = 
+                    `<table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Level</th>
+                            <th>Method</th>
+                        </tr>
+                        `;
+
+                for (var x = 0; x < currentPokemon.evolutions.length; x++) {
+                    tableString += 
+                        `<tr>
+                            <td class="evolution-link">${currentPokemon.evolutions[x].to}</td>
+                            <td>${currentPokemon.evolutions[x].level}</td>
+                            <td>${currentPokemon.evolutions[x].method}</td>
+                        </tr>
+                        `;
+                }
+                tableString += `</table>`;
+            }
+            else {
+                tableString = "None.";
+            }
 
 
             $(this).find('.pokedetails').toggle();
