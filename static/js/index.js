@@ -26,7 +26,6 @@ $(document).ready(function() {
                     .mouseleave(pokehoverLeave)
                     .click(toggleDetails);
                 
-
             }
     });
 
