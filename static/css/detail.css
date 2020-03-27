@@ -7,50 +7,22 @@
 
 /* Your styles begin here */
 
+.container {
+    margin: 20px;
+    max-width: 70%;
+}
+
 ul {
     margin-left: 20px;
     margin-top: 10px;
 }
 
-.modal-pokeimage {
+.pokeimage {
     max-width:70%;
     position:relative;
 }
 
-.modal-bg {
-    display:none;
-    opacity:50%;
-    background-color:black;
-    width: 100%;
-    height: 100%;
-    position:fixed;
-    z-index: 50;
-}
-
-.modal-container {
-    display: none;
-    position: fixed;
-    top:0px;
-    width: 100%;
-    z-index: 100;
-}
-
-.modal {
-    width: 80%;
-    max-width: 850px;
-    max-height: 80vh;
-    position: relative;
-    top: 40px;
-    padding: 20px;
-    margin: 0 auto;
-    z-index: 100;
-    background-color: white;
-    border: 1px solid black;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-
-.modal div {
+.container div {
     margin-top: 10px;
     margin-bottom: 5px;
     padding: 10px;
@@ -65,15 +37,16 @@ table {
     margin-top: 10px;
 }
 
-.modal p {
+.container p {
     margin-top: 10px;
 }
 
-.modal-dismiss {
+.dismiss {
     position: relative;
     width: 100%;
     bottom: 10px;
     text-align: center;
+    margin-top: 20px;
 }
 
 .evolution-link {

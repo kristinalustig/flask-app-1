@@ -1,19 +1,14 @@
 // Your code starts here
 $(document).ready(function() {
 
-    var pokemonData;
-    var currentPokemon;
-
     $.ajax("api/pokemon",
         {
             dataType: 'json',
             success: function(data) {
 
-                pokemonData = data;
-
                 for (var pokenum = 1; pokenum <= 151; pokenum++) {
 
-                    var pokemonInfo = pokemonData[pokenum-1];
+                    var pokemonInfo = data[pokenum-1];
 
                     $(".pokemon-flex").append(
                         `<a class="pokemon" id="${pokemonInfo.id}" href="/${pokemonInfo.id}">
@@ -29,7 +24,6 @@ $(document).ready(function() {
                 
             }
     });
-
 
 //click handlers
     function pokehoverEnter() {

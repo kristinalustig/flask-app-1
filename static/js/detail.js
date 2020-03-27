@@ -1,11 +1,39 @@
 // Your code starts here
 
-//helper function - given an ID, return that pokemon's data
-function pokeHelper(id) {
+$(document).ready(function() {
 
-    return pokemonData[id-1];
+    var currentUrl = $(location).attr('href');
+    var currentId = currentUrl.slice(currentUrl.lastIndexOf("/")+1);
+    console.log(currentId);
 
-}
+    $.ajax(`api/pokemon/${currentId}`, 
+    {
+
+        datatype: 'JSON',
+        success: function(data) {
+
+             //populate the pokemon's name
+            $(".pokename").text(data.name);
+            
+            //populate the description
+            $(".pokedescription").text(data.description);
+
+            //populates the image URL
+            $(".pokeimage").attr("src",data.image_url);
+
+            //appends correct information to "types" section
+            $('.typelist').append(listMaker(data.types));    
+
+            //creates the table for evolutions for a given pokemon
+            if (data.evolutions.length != 0) {
+                $('.evolution-table').append(tableRowMaker(data.evolutions));
+            }
+
+        }
+
+    });
+
+});
 
 //takes an array of types and outputs a string of formatted list items to append
 function listMaker(typeArray) {
@@ -24,7 +52,7 @@ function tableRowMaker(evolutionArray) {
     for (var x = 0; x < evolutionArray.length; x++) {
         tableString += 
             `<tr class="evolution-item">
-                <td class="evolution-link" id="e${evolutionArray[x].id}">${evolutionArray[x].to}</td>
+                <td class="evolution-link"><a href="/${evolutionArray[x].id}">${evolutionArray[x].to}</a></td>
                 <td>${evolutionArray[x].level}</td>
                 <td>${evolutionArray[x].method}</td>
             </tr>
@@ -34,21 +62,3 @@ function tableRowMaker(evolutionArray) {
     return tableString;
 
 }
-
- //populate the pokemon's name
- $(".modal-pokename").text(currentPokemon.name);
-            
- //populate the description
- $(".modal-pokedescription").text(currentPokemon.description);
-
- //populates the image URL
- $(".modal-pokeimage").attr("src",currentPokemon.image_url);
-
- //appends correct information to "types" section
- $('.modal-typelist').append(listMaker(currentPokemon.types));    
-
- //creates the table for evolutions for a given pokemon
- if (currentPokemon.evolutions.length != 0) {
-     $('.modal-evolution-table').append(tableRowMaker(currentPokemon.evolutions));
-     $(".evolution-link").click(navigateToEvolution);
- }
